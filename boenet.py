@@ -9,21 +9,22 @@ from torch.utils.data.dataset import ConcatDataset
 import os
 from langchain_community.embeddings import HuggingFaceEmbeddings
 import requests
+from dotenv import load_dotenv
 
 
+load_dotenv()
 ### API KEYShsl"
-HUG_API_KEY = "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"
-os.environ['HF_TOKEN'] = HUG_API_KEY
 os.environ['LANGCHAIN_TRACING_V2'] = 'true'
 os.environ['LANGCHAIN_ENDPOINT'] = 'https://api.smith.langchain.com'
-os.environ['LANGCHAIN_API_KEY'] = 'ls__fe633ef5a71843baa5d07db00d83cd68'
-os.environ['PINECONE_API_KEY'] = "db004a52-8d38-49e6-8731-0f0a562d10b1"
-
+os.environ['LANGCHAIN_TRACING_V2'] = 'true'
+os.environ['PINECONE_API_KEY'] = os.getenv('PINECONE_API_KEY')
+os.environ['TAVILY_API_KEY'] = os.getenv('TAVILY_API_KEY')
+os.environ['HF_TOKEN'] = os.getenv('HUG_API_KEY')
 
 # Request to create embeddings
 model_id = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 api_url = f"https://api-inference.huggingface.co/pipeline/feature-extraction/{model_id}"
-headers = {"Authorization": f"Bearer {HUG_API_KEY}"}
+headers = {"Authorization": f"Bearer {os.getenv('HUG_API_KEY')}"}
 
 
 class BOENet(nn.Module):
